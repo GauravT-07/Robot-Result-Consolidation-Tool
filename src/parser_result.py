@@ -61,7 +61,7 @@ def print_test_results(suite):
     for child in suite.suites:
         print_test_results(child)
 
-def print_test_results_in_folder(folder_path:Path|str):
+def print_test_results_in_folder(folder_path):
     """Print all test results from your robot output folder
 
     Args:
@@ -72,7 +72,7 @@ def print_test_results_in_folder(folder_path:Path|str):
         result = ExecutionResult(file)
         print_test_results(result.suite)
 
-def list_tags_from_result_files(folder_path:Path|str):
+def list_tags_from_result_files(folder_path):
     """List statistics for each tag
     """
     output_files = list_files(folder_path)
@@ -105,7 +105,7 @@ def check_tags(tags_to_check, output_file):
             print(f"❌ Tag not found: {tag}")
     return flag
 
-def check_tags_in_results_folder(folder_path:Path|str, tags_to_check):
+def check_tags_in_results_folder(folder_path, tags_to_check):
     """Check tags for all test results from your robot output folder
 
     Args:
@@ -134,10 +134,10 @@ if __name__ == "__main__":
     # output_path = Path("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
     #print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\result")
     tags_to_check = ['gaurav','akshay']
-    list_tags_from_result_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata")
+    #list_tags_from_result_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata")
     #check_tags(tags_to_check, "C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\result\\output.xml")
-    #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-1", tags_to_check)
-    #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
+    check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-1", tags_to_check)
+    check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
 
 
 

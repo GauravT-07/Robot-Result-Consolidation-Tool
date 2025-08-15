@@ -20,7 +20,7 @@ Push button
 
 Push multiple buttons
     [Tags]   gauabc  akshay  shanky
-    Push button1
+    Push button    1
     Push button    2
     Result should be    12
 
