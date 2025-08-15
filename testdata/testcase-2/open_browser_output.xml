@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.12.1 on win32)" generated="2025-08-15T18:23:30.836967" rpa="false" schemaversion="5">
+<suite id="s1" name="Open Browser" source="C:\Users\HP\Desktop\python_practice\Robot-Result-Consolidation-Tool\testdata\open_browser.robot">
+<test id="s1-t1" name="Open Example In Chrome" line="5">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-08-15T18:23:32.815491" level="INFO">Opening browser 'chrome' to base url 'https://www.hackerrank.com/profile/GauravTotla_CS'.</msg>
+<arg>https://www.hackerrank.com/profile/GauravTotla_CS</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-08-15T18:23:32.815491" elapsed="39.047805"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-08-15T18:24:21.866531" level="INFO">Slept 10 seconds.</msg>
+<arg>10s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-08-15T18:24:11.864297" elapsed="10.002234"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-08-15T18:24:21.866531" elapsed="2.237139"/>
+</kw>
+<status status="PASS" start="2025-08-15T18:23:32.815491" elapsed="51.288179"/>
+</test>
+<status status="PASS" start="2025-08-15T18:23:30.836967" elapsed="53.266703"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Open Browser" id="s1" pass="1" fail="0" skip="0">Open Browser</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

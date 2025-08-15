@@ -1,6 +1,6 @@
 from robot.api import ExecutionResult
 import re
-from color_coding import colour_print, BOLD, GREEN, RED
+from color_coding import colour_print, BOLD, GREEN, RED, BOLD_UNDERLINE
 from list_result import list_files
 from pathlib import Path
 
@@ -72,24 +72,72 @@ def print_test_results_in_folder(folder_path:Path|str):
         result = ExecutionResult(file)
         print_test_results(result.suite)
 
-def check_tags():
-    """List statistics
+def list_tags_from_result_files(folder_path:Path|str):
+    """List statistics for each tag
     """
-    result = ExecutionResult("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
+    output_files = list_files(folder_path)
+    for file in output_files: # type: ignore
+        result = ExecutionResult(file)
+        print_file = "File-name -: " + str(file)
+        colour_print(print_file, BOLD_UNDERLINE)        
+    # The tag statistics are stored in result.statistics.tags
+        for tag_stat in result.statistics.tags:
+            print(f"Tag: {tag_stat.name}, "
+                f"Passed: {tag_stat.passed}, "
+                f"Failed: {tag_stat.failed}, "
+                f"Skipped: {tag_stat.skipped}")
 
-# The tag statistics are stored in result.statistics.tags
-    for tag_stat in result.statistics.tags:
-        print(f"Tag: {tag_stat.name}, "
-            f"Passed: {tag_stat.passed}, "
-            f"Failed: {tag_stat.failed}, "
-            f"Skipped: {tag_stat.skipped}")
+def check_tags(tags_to_check, output_file):
+    """Check if given tags exist in Robot output.xml and print their stats."""
+    flag = False
+    result = ExecutionResult(output_file)
+
+    # Build a dictionary for quick lookup
+    tag_stats_map = {tag_stat.name: tag_stat for tag_stat in result.statistics.tags}
+
+    # Check each user-specified tag
+    for tag in tags_to_check:
+        if tag in tag_stats_map:
+            t = tag_stats_map[tag]
+            print(f"✅ Tag found: {t.name}, Passed: {t.passed}, Failed: {t.failed}, Skipped: {t.skipped}")
+        else:
+            flag = True
+            print(f"❌ Tag not found: {tag}")
+    return flag
+
+def check_tags_in_results_folder(folder_path:Path|str, tags_to_check):
+    """Check tags for all test results from your robot output folder
+
+    Args:
+        folder_path (Path | str): path to your robot output folder
+        tags_to_check: List of tags to check in your robot output folder
+    """
+    output_files = list_files(folder_path)
+    problem_files = []
+    for file in output_files: # type: ignore
+        print_file = "File-name -: " + str(file)
+        colour_print(print_file, BOLD_UNDERLINE)
+        if(check_tags(tags_to_check, file)):
+            problem_files.append(file)
+    if(len(problem_files)!=0):  
+        str_to_print = "Probelm with files given below:"  
+        colour_print(str_to_print, BOLD_UNDERLINE)    
+        for file in problem_files:
+            print("File-name -: ", end="")
+            print_file = str(file)
+            colour_print(print_file, RED)
+            
+            
 
 if __name__ == "__main__":
     # list_test("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
     # output_path = Path("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
-    #print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo")
-    check_tags()
-
+    #print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\result")
+    tags_to_check = ['gaurav','akshay']
+    list_tags_from_result_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata")
+    #check_tags(tags_to_check, "C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\result\\output.xml")
+    #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-1", tags_to_check)
+    #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
 
 
 

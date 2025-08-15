@@ -1,6 +1,6 @@
 from pathlib import Path
 import os
-from color_coding import colour_print, BOLD
+from color_coding import colour_print, BOLD, BOLD_UNDERLINE
 
 def list_files(file_path, pattern:str ="*.xml"):
     """List the robot files present in the current folder
@@ -27,7 +27,8 @@ def list_files(file_path, pattern:str ="*.xml"):
             # + list(root_dir.rglob('*.html')) + list(root_dir.rglob('*.log'))
             
             if output_files:
-                print("Files present in the directory:",len(output_files))
+                print_file = "Files present in the directory-: " + str(len(output_files))
+                colour_print(print_file, BOLD_UNDERLINE)
                 for file in output_files:
                     resultfilepath = "- " + str(file.relative_to(root_dir))  # cleaner path
                     colour_print(resultfilepath,BOLD)

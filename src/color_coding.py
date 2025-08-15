@@ -12,7 +12,7 @@ RESET = '\u001b[0m'
 BOLD = '\u001b[1m'
 UNDERLINE = '\u001b[4m'
 REVERSE = '\u001b[7m'
-
+BOLD_UNDERLINE = BOLD + UNDERLINE
 
 def colour_print(text: str, effect: str) -> None:
     """
