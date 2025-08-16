@@ -7,3 +7,9 @@ List xml files present in test case 2 directory -:
 Print results for files present in test case 2 directory -:
 ![alt text](images/image-1.png)
 ![alt text](images/image-3.png)
+
+Check user specified tags in the given results directory (test case 2) -:
+![alt text](images/image4.png)
+
+Merge the given robot files -:
+![alt text](images/image5.png)
