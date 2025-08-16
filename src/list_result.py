@@ -27,7 +27,7 @@ def list_files(file_path, pattern:str ="*.xml"):
             # + list(root_dir.rglob('*.html')) + list(root_dir.rglob('*.log'))
             
             if output_files:
-                print_file = "📂 Files present in the directory-: " + str(len(output_files))
+                print_file = f"📂 Files present in the directory ({file_path}) -: " + str(len(output_files))
                 colour_print(print_file, BOLD_UNDERLINE)
                 for file in output_files:
                     resultfilepath = "- " + str(file.relative_to(root_dir))  # cleaner path
@@ -41,4 +41,4 @@ def list_files(file_path, pattern:str ="*.xml"):
     return output_files
 
 if __name__ == "__main__":
-    list_files("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo","*eck*.xml")
+    list_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2","*.xml")
