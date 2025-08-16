@@ -13,9 +13,7 @@ def merge_robot_results(src_folder, new_folder_path, merged_name):
     xml_files = list_files(src_folder)
     xml_paths = [os.path.join(src_folder, f) for f in xml_files]# type: ignore
 
-    print(f"📂 Found {len(xml_files)} XML files:")# type: ignore
     for f in xml_files:# type: ignore
-        print(f" - {f}")
         shutil.copy(os.path.join(src_folder, f), new_folder)  # Copy originals
 
     merged_xml_path = os.path.join(new_folder, f"{merged_name}.xml")

@@ -4,7 +4,19 @@ from color_coding import colour_print, BOLD, GREEN, RED, BOLD_UNDERLINE
 from list_result import list_files
 from pathlib import Path
 
-def list_test(result_file, tag_pattern=".*"):
+def list_test_results_in_folder(folder_path, tag_pattern=".*"):
+    """Print all test results from your robot output folder
+
+    Args:
+        folder_path (Path | str): path to your robot output folder
+    """
+    output_files = list_files(folder_path)
+    print_file = "✅ Matching tag found -: "
+    colour_print(print_file, GREEN)    
+    for file in output_files: # type: ignore
+        list_test(file, tag_pattern)
+
+def list_test(result_file_to_parse, tag_pattern=".*"):
     """list test present in the result file matching with the given pattern
 
     Args:
@@ -13,9 +25,12 @@ def list_test(result_file, tag_pattern=".*"):
     """
 
     # Path to Robot Framework's output XML
-    result_file = ExecutionResult(result_file)
+    result_file = ExecutionResult(result_file_to_parse)
     tag_pattern = re.compile(tag_pattern, re.IGNORECASE)  # e.g., names starting with "Smoke"
     match_test = find_matching_tests_with_tags(result_file.suite,tag_pattern)
+    if(len(match_test)!=0):
+        print_file = "File-name -: " + str(result_file_to_parse)
+        colour_print(print_file, BOLD_UNDERLINE)
     # Output matched test names and their tags
     for test_name, tags in match_test:
         print(f"Test: {test_name} | Matched Tag(s): {tags}")
@@ -69,6 +84,8 @@ def print_test_results_in_folder(folder_path):
     """
     output_files = list_files(folder_path)
     for file in output_files: # type: ignore
+        print_file = "File-name -: " + str(file)
+        colour_print(print_file, BOLD_UNDERLINE)
         result = ExecutionResult(file)
         print_test_results(result.suite)
 
@@ -132,12 +149,13 @@ def check_tags_in_results_folder(folder_path, tags_to_check):
 if __name__ == "__main__":
     # list_test("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
     # output_path = Path("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
-    #print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\result")
+    #print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata")
+    list_test_results_in_folder('C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata','gaurav')
     tags_to_check = ['gaurav','akshay']
     #list_tags_from_result_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata")
     #check_tags(tags_to_check, "C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\result\\output.xml")
-    check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-1", tags_to_check)
-    check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
+    #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata", tags_to_check)
+    #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
 
 
 
