@@ -5,7 +5,7 @@ from list_result import list_files
 from pathlib import Path
 
 def list_test_results_in_folder(folder_path, tag_pattern=".*"):
-    """Print all test results from your robot output folder
+    """list test present in the result folder matching with the given pattern
 
     Args:
         folder_path (Path | str): path to your robot output folder

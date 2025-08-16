@@ -1,0 +1,4 @@
+1) Give a list of all the Robot results present in the current folder
+2) Print test results from all the result files in the given output folder 
+3) Parse the robot xml file for PASS, FAIL or Not acceptable as per user condition
+4) Merge the log files which are acceptable 
