@@ -13,3 +13,6 @@ Check user specified tags in the given results directory (test case 2) -:
 
 Merge the given robot files -:
 ![alt text](images/image5.png)
+
+List test matching with tag of any pattern from your result folder -: 
+![alt text](images/image6.png)

@@ -19,10 +19,10 @@ def list_test_results_in_folder(folder_path, tag_pattern=".*"):
         if Flag != True :
             problem_files.append(file)
     if(len(problem_files)!=0):  
-        str_to_print = "\n\n❌ Probelm with files given below: (Broken files)"  
+        str_to_print = "\n\n❌ Probelm with files given below:"  
         colour_print(str_to_print, RED)    
         for file in problem_files:
-            print("File-name -: ",file,end="")
+            print("File-name -: ",file)
                             
 
 def list_test(result_file_to_parse, tag_pattern=".*"):
@@ -111,6 +111,7 @@ def list_tags_from_result_files(folder_path):
     """List statistics for each tag
     """
     output_files = list_files(folder_path)
+    problem_files = []
     for file in output_files: # type: ignore
         try:
             result = ExecutionResult(file)
@@ -122,8 +123,20 @@ def list_tags_from_result_files(folder_path):
                     f"Passed: {tag_stat.passed}, "
                     f"Failed: {tag_stat.failed}, "
                     f"Skipped: {tag_stat.skipped}")
+            if tag_stat.failed!=0:
+                    problem_files.append(file)
         except Exception as e:
+            print_file = "File-name -: " + str(file)
+            colour_print(print_file, BOLD_UNDERLINE) 
             print("Something Went Wrong", e)
+    if(len(problem_files)!=0):  
+        str_to_print = "Following files have failed:"  
+        colour_print(str_to_print, BOLD_UNDERLINE)    
+        for file in problem_files:
+            print("File-name -: ", end="")
+            print_file = str(file)
+            colour_print(print_file, RED)        
+        
 
 def check_tags(tags_to_check, output_file):
     """Check if given tags exist in Robot output.xml and print their stats."""
@@ -174,12 +187,12 @@ if __name__ == "__main__":
     #list_test("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2\\keyword_driven_output1.xml")
     # output_path = Path("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
     #print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2")
-    #list_test_results_in_folder('C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata')
+    #list_test_results_in_folder('C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata',"gaur.*")
     tags_to_check = ['gaurav','akshay']
-    #list_tags_from_result_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata")
+    list_tags_from_result_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2")
     #check_tags(tags_to_check, "C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\result\\output.xml")
     #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata", tags_to_check)
-    check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
+    #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
 
 
 
