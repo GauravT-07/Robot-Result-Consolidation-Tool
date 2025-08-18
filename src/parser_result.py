@@ -11,10 +11,19 @@ def list_test_results_in_folder(folder_path, tag_pattern=".*"):
         folder_path (Path | str): path to your robot output folder
     """
     output_files = list_files(folder_path)
-    print_file = "✅ Matching tag found -: "
+    problem_files = []
+    print_file = "\n\n✅ Matching tag found -: "
     colour_print(print_file, GREEN)    
     for file in output_files: # type: ignore
-        list_test(file, tag_pattern)
+        Flag = list_test(file, tag_pattern)
+        if Flag != True :
+            problem_files.append(file)
+    if(len(problem_files)!=0):  
+        str_to_print = "\n\n❌ Probelm with files given below: (Broken files)"  
+        colour_print(str_to_print, RED)    
+        for file in problem_files:
+            print("File-name -: ",file,end="")
+                            
 
 def list_test(result_file_to_parse, tag_pattern=".*"):
     """list test present in the result file matching with the given pattern
@@ -24,16 +33,22 @@ def list_test(result_file_to_parse, tag_pattern=".*"):
         tag_pattern (str): tag/pattern to filter test from given result_file, Default = everything   
     """
 
-    # Path to Robot Framework's output XML
-    result_file = ExecutionResult(result_file_to_parse)
-    tag_pattern = re.compile(tag_pattern, re.IGNORECASE)  # e.g., names starting with "Smoke"
-    match_test = find_matching_tests_with_tags(result_file.suite,tag_pattern)
-    if(len(match_test)!=0):
-        print_file = "File-name -: " + str(result_file_to_parse)
-        colour_print(print_file, BOLD_UNDERLINE)
-    # Output matched test names and their tags
-    for test_name, tags in match_test:
-        print(f"Test: {test_name} | Matched Tag(s): {tags}")
+    # Path to Robot Framework's output XML.
+    try:
+        result_file = ExecutionResult(result_file_to_parse)
+        tag_pattern = re.compile(tag_pattern, re.IGNORECASE)  # e.g., names starting with "Smoke"
+        match_test = find_matching_tests_with_tags(result_file.suite,tag_pattern)
+        if(len(match_test)!=0):
+            print_file = "File-name -: " + str(result_file_to_parse)
+            colour_print(print_file, BOLD_UNDERLINE)
+        # Output matched test names and their tags
+        for test_name, tags in match_test:
+            print(f"Test: {test_name} | Matched Tag(s): {tags}")
+        return True
+    except Exception as e:
+        # error_print = "Something Went Wrong" + str(e)
+        # colour_print(error_print,RED)
+        return e
 
 def find_matching_tests_with_tags(suite,tag_pattern):
     """_summary_
@@ -86,40 +101,49 @@ def print_test_results_in_folder(folder_path):
     for file in output_files: # type: ignore
         print_file = "File-name -: " + str(file)
         colour_print(print_file, BOLD_UNDERLINE)
-        result = ExecutionResult(file)
-        print_test_results(result.suite)
+        try:
+            result = ExecutionResult(file)
+            print_test_results(result.suite)
+        except Exception as e:
+            print("\nSomething wrong with file",e,end="\n\n")
 
 def list_tags_from_result_files(folder_path):
     """List statistics for each tag
     """
     output_files = list_files(folder_path)
     for file in output_files: # type: ignore
-        result = ExecutionResult(file)
-        print_file = "File-name -: " + str(file)
-        colour_print(print_file, BOLD_UNDERLINE)        
+        try:
+            result = ExecutionResult(file)
+            print_file = "File-name -: " + str(file)
+            colour_print(print_file, BOLD_UNDERLINE)        
     # The tag statistics are stored in result.statistics.tags
-        for tag_stat in result.statistics.tags:
-            print(f"Tag: {tag_stat.name}, "
-                f"Passed: {tag_stat.passed}, "
-                f"Failed: {tag_stat.failed}, "
-                f"Skipped: {tag_stat.skipped}")
+            for tag_stat in result.statistics.tags:
+                print(f"Tag: {tag_stat.name}, "
+                    f"Passed: {tag_stat.passed}, "
+                    f"Failed: {tag_stat.failed}, "
+                    f"Skipped: {tag_stat.skipped}")
+        except Exception as e:
+            print("Something Went Wrong", e)
 
 def check_tags(tags_to_check, output_file):
     """Check if given tags exist in Robot output.xml and print their stats."""
     flag = False
-    result = ExecutionResult(output_file)
+    try:
+        result = ExecutionResult(output_file)
 
-    # Build a dictionary for quick lookup
-    tag_stats_map = {tag_stat.name: tag_stat for tag_stat in result.statistics.tags}
+        # Build a dictionary for quick lookup
+        tag_stats_map = {tag_stat.name: tag_stat for tag_stat in result.statistics.tags}
 
-    # Check each user-specified tag
-    for tag in tags_to_check:
-        if tag in tag_stats_map:
-            t = tag_stats_map[tag]
-            print(f"✅ Tag found: {t.name}, Passed: {t.passed}, Failed: {t.failed}, Skipped: {t.skipped}")
-        else:
-            flag = True
-            print(f"❌ Tag not found: {tag}")
+        # Check each user-specified tag
+        for tag in tags_to_check:
+            if tag in tag_stats_map:
+                t = tag_stats_map[tag]
+                print(f"✅ Tag found: {t.name}, Passed: {t.passed}, Failed: {t.failed}, Skipped: {t.skipped}")
+            else:
+                flag = True
+                print(f"❌ Tag not found: {tag}")
+    except Exception as e:
+        print("Something went wrong", e)
     return flag
 
 def check_tags_in_results_folder(folder_path, tags_to_check):
@@ -147,15 +171,15 @@ def check_tags_in_results_folder(folder_path, tags_to_check):
             
 
 if __name__ == "__main__":
-    # list_test("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
+    #list_test("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2\\keyword_driven_output1.xml")
     # output_path = Path("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
-    print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2")
-    #list_test_results_in_folder('C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata','gaurav')
+    #print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2")
+    #list_test_results_in_folder('C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata')
     tags_to_check = ['gaurav','akshay']
     #list_tags_from_result_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata")
     #check_tags(tags_to_check, "C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\result\\output.xml")
     #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata", tags_to_check)
-    #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
+    check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
 
 
 
