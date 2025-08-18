@@ -2,7 +2,7 @@
 This Repo contains files to consolidate robot framework result files.
 
 List xml files present in test case 2 directory -:
-![alt text](images/image.png)
+![Workflow](https://raw.githubusercontent.com/GauravT-07/Robot-Result-Consolidation-Tool/main/images/image.png)
 
 Print results for files present in test case 2 directory -:
 ![alt text](images/image-1.png)
