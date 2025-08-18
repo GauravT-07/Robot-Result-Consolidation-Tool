@@ -16,3 +16,6 @@ Merge the given robot files -:
 
 List test matching with tag of any pattern from your result folder -: 
 ![alt text](images/image6.png)
+
+Statistics of all results files in your current folder along with list of all fail result files present in your folder.
+![alt text](images/image7.png)
