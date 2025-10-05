@@ -1,6 +1,9 @@
 # Robot-Result-Consolidation-Tool
 This Repo contains files to consolidate robot framework result files.
 
+Listner usage -:
+![alt text](images/image8.png)
+
 List xml files present in test case 2 directory -:
 ![Workflow](https://raw.githubusercontent.com/GauravT-07/Robot-Result-Consolidation-Tool/main/images/image.png)
 
