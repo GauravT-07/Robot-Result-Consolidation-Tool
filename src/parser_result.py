@@ -186,10 +186,10 @@ def check_tags_in_results_folder(folder_path, tags_to_check):
 if __name__ == "__main__":
     #list_test("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2\\keyword_driven_output1.xml")
     # output_path = Path("C:\\Users\\HP\\Desktop\\python_practice\\RobotDemo\\output.xml")
-    #print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2")
+    print_test_results_in_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2")
     #list_test_results_in_folder('C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata',"gaur.*")
     tags_to_check = ['gaurav','akshay']
-    list_tags_from_result_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2")
+    #list_tags_from_result_files("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2")
     #check_tags(tags_to_check, "C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\result\\output.xml")
     #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata", tags_to_check)
     #check_tags_in_results_folder("C:\\Users\\HP\\Desktop\\python_practice\\Robot-Result-Consolidation-Tool\\testdata\\testcase-2", ['sun','rise'])
